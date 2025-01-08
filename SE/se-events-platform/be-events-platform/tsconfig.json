@@ -106,6 +106,12 @@
 
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
-  }
+    "skipLibCheck": true,                                /* Skip type checking all .d.ts files. */
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "noImplicitAny": true,
+  },
+  "include": ["src/types.d.ts", "src/**/*"],
+  "exclude": ["node_modules"]
 }
