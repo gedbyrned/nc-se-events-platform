@@ -4,8 +4,8 @@ import { IUser } from '../types/user'; // Import the IUser interface
 
 // Dummy users list for authentication (add password and roles)
 const users: IUser[] = [
-    { userId: 1, username: 'user1', password: 'password1'},
-    { userId: 2, username: 'user2', password: 'password2' },
+    { userId: 1, username: 'user1', password: 'password1', roles: ['user'] },
+    { userId: 2, username: 'user2', password: 'password2', roles: ['admin'] },
 ];
 
 const secretKey = process.env.JWT_SECRET || 'yourSecretKey';
@@ -18,7 +18,7 @@ export const authenticate = (req: Request, res: Response): void => {
 
     if (user) {
         const token = jwt.sign(
-            { userId: user.userId, username: user.username },
+            { userId: user.userId, username: user.username, roles: user.roles },
             secretKey,
             { expiresIn: '1h' }
         );
