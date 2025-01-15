@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "seed": "node ./src/db/seeds/run-seed.js",
+    "start": "node ./src/app.js"
   },
   "keywords": [],
   "author": "",
@@ -28,8 +30,19 @@
     "@types/pg-format": "^1.0.5",
     "@types/supertest": "^6.0.2",
     "jest": "^29.7.0",
+    "module-alias": "^2.2.3",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
-    "typescript": "^5.7.2"
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "_moduleAliases": {
+    "foo": "dist"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ]
   }
 }
