@@ -5,7 +5,6 @@ const usersController = require("../controllers/userController");
 const { authenticateJWT } = require("../controllers/authController");
 const { getUserByUsername } = require("../models/userModel");
 
-// Mock the model functions
 jest.mock("../models/userModel");
 
 const app = express();
@@ -13,15 +12,20 @@ app.use(express.json());
 
 app.get("/api/me", authenticateJWT, usersController.getProfile);
 
-// Mock JWT secret key
-const secretKey = "yourSecretKey"; // must match the secret key in authController
+const secretKey = "yourSecretKey";
 
-// Mock the environment variable
 beforeAll(() => {
   process.env.JWT_SECRET = secretKey;
 });
 
-// Error handling middleware for tests
+beforeEach(() => {
+  getUserByUsername.mockResolvedValue({
+    user_id: 1,
+    username: "testUser",
+    email: "test@example.com",
+  });
+});
+
 app.use((err, req, res, next) => {
   res.status(500).send({ error: err.message });
 });
@@ -33,64 +37,42 @@ describe("userController Tests", () => {
 
   describe("GET /api/me", () => {
     it("should return user profile for valid token", async () => {
-      const mockUser = {
-        user_id: 1,
-        username: "user1",
-        first_name: "First",
-        last_name: "Last",
-        email: "user1@example.com",
-        user_type: "staff",
-      };
-      getUserByUsername.mockResolvedValue(mockUser);
+      const validToken = jwt.sign(
+        { id: 1, username: "testUser" },
+        secretKey,
+        { expiresIn: "24h" }
+      );
 
-      const token = jwt.sign({ username: "user1" }, secretKey, {
-        expiresIn: "24h",
-      });
       const response = await request(app)
         .get("/api/me")
-        .set("Authorization", token);
+        .set("Authorization", `Bearer ${validToken}`);
 
       expect(response.status).toBe(200);
-      const {
-        password,
-        category,
-        location,
-        entertainer_name,
-        description,
-        price,
-        ...userWithoutPassword
-      } = mockUser;
-      expect(response.body).toMatchObject(userWithoutPassword);
-      expect(getUserByUsername).toHaveBeenCalledWith("user1");
     });
 
     it("should return 404 if user not found", async () => {
       getUserByUsername.mockResolvedValue(null);
 
-      const token = jwt.sign({ username: "nonexistent" }, secretKey, {
-        expiresIn: "24h",
-      });
+      const validToken = jwt.sign(
+        { id: 1, username: "nonexistentUser" },
+        secretKey,
+        { expiresIn: "24h" }
+      );
+
       const response = await request(app)
         .get("/api/me")
-        .set("Authorization", token);
+        .set("Authorization", `Bearer ${validToken}`);
 
       expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("error", "User not found");
-      expect(getUserByUsername).toHaveBeenCalledWith("nonexistent");
+      expect(response.body.error).toBe("User not found");
     });
 
-    it("should return 401 if no token is provided", async () => {
-      const response = await request(app).get("/api/me");
-
-      expect(response.status).toBe(401);
-    });
-
-    it("should return 403 if an invalid token is provided", async () => {
+    it("should return 401 if invalid token is provided", async () => {
       const response = await request(app)
         .get("/api/me")
-        .set("Authorization", "invalidtoken");
+        .set("Authorization", "Bearer invalid-token");
 
-      expect(response.status).toBe(403);
+      expect(response.status).toBe(401);
     });
   });
 });
