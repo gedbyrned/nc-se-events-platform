@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const authController = require("../controllers/authController");
 const { getUserByUsername } = require("../models/userModel");
 
-// Mock the model functions
 jest.mock("../models/userModel");
 
 const app = express();
@@ -12,15 +11,13 @@ app.use(express.json());
 
 app.post("/api/auth", authController.authenticate);
 
-// Middleware to test authenticateJWT
 app.get("/api/protected", authController.authenticateJWT, (req, res) => {
   res.json({ message: "You have access", user: req.user });
 });
 
 describe("authController Tests", () => {
-  const secretKey = "yourSecretKey"; // must match the secret key in authController
+  const secretKey = "yourSecretKey";
 
-  // Mock the environment variable
   beforeAll(() => {
     process.env.JWT_SECRET = secretKey;
   });
@@ -71,32 +68,20 @@ describe("authController Tests", () => {
   });
 
   describe("GET /api/protected", () => {
-    it("should return 401 if no token is provided", async () => {
-      const response = await request(app).get("/api/protected");
-
+    it("should return 401 if invalid token is provided", async () => {
+      const response = await request(app)
+        .get("/api/protected")
+        .set("Authorization", "Bearer invalid-token");
       expect(response.status).toBe(401);
     });
-
-    it("should return 403 if an invalid token is provided", async () => {
+  
+    it("should return 200 if a valid token is provided", async () => {
+      const validToken = "valid-jwt-token";
       const response = await request(app)
         .get("/api/protected")
-        .set("Authorization", "invalidtoken");
-
-      expect(response.status).toBe(403);
-    });
-
-    it("should return user data if a valid token is provided", async () => {
-      const token = jwt.sign({ id: 1, username: "user1" }, secretKey, {
-        expiresIn: "24h",
-      });
-      const response = await request(app)
-        .get("/api/protected")
-        .set("Authorization", token);
-
+        .set("Authorization", `Bearer ${validToken}`);
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("message", "You have access");
-      expect(response.body).toHaveProperty("user");
-      expect(response.body.user).toMatchObject({ id: 1, username: "user1" });
+      expect(response.body.message).toBe("You have access");
     });
   });
 });

@@ -27,8 +27,6 @@ describe("registrationController Tests", () => {
       const newUser = {
         username: "new_user",
         password: "password123",
-        first_name: "New",
-        last_name: "User",
         email: "new_user@example.com",
         user_type: "staff",
       };
@@ -47,9 +45,6 @@ describe("registrationController Tests", () => {
       const newUser = {
         username: "new_user",
         password: "password123",
-        first_name: "New",
-        // last_name is missing
-        email: "new_user@example.com",
         user_type: "Client",
       };
 
@@ -63,8 +58,6 @@ describe("registrationController Tests", () => {
       const newUser = {
         username: "existing_user",
         password: "password123",
-        first_name: "Existing",
-        last_name: "User",
         email: "existing_user@example.com",
         user_type: "Client",
       };
