@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { authenticateUser } from "../utils/Api";
+import '../styles/style.css';
 
 const SignIn = ({ setToken }) => {
   const [credentials, setCredentials] = useState({

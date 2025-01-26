@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import UserRegistration from "./UserRegistration";
 import StaffRegistration from "./StaffRegistration";
+import '../styles/style.css';
 
 const RegisterScreen = ({ navigateToLogin }) => {
   const [isStaff, setIsStaff] = useState(false); // Toggle between staff and user registration

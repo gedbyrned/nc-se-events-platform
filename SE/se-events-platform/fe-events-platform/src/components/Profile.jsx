@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getProfile } from "../utils/Api";
+import GoogleCalendarLogin from "./GoogleCalendarLogin";
+import '../styles/style.css';
 
 const Profile = ({ token }) => {
   const [profile, setProfile] = useState(null);
@@ -15,9 +17,10 @@ const Profile = ({ token }) => {
   if (!profile) return <p>Loading profile...</p>;
 
   return (
-    <div>
+    <div className="profile-container">
       <h1>Welcome, {profile.username}</h1>
       <p>Email: {profile.email}</p>
+      <p><strong>Profile Type:</strong> {profile.user_type}</p>
 
       {profile.user_type !== "staff" && (
         <>
@@ -28,12 +31,8 @@ const Profile = ({ token }) => {
                 <li key={event.event_id}>
                   <h3>{event.event_name}</h3>
                   <p>{event.description}</p>
-                  <p>
-                    <strong>Location:</strong> {event.location}
-                  </p>
-                  <p>
-                    <strong>Date:</strong> {new Date(event.date).toLocaleDateString()}
-                  </p>
+                  <p><strong>Location:</strong> {event.location}</p>
+                  <p><strong>Date:</strong> {new Date(event.start_time).toLocaleDateString()}</p>
                 </li>
               ))}
             </ul>
@@ -42,6 +41,11 @@ const Profile = ({ token }) => {
           )}
         </>
       )}
+
+      <div className="calendar-container">
+        <h2>Access Your Google Calendar</h2>
+        <GoogleCalendarLogin />
+      </div>
     </div>
   );
 };

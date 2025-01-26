@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { registerUser } from "../utils/Api"; // Import the registerUser function from api.jsx
+import '../styles/style.css';
 
 const UserRegistration = ({ navigateToLogin }) => {
   const [template, setTemplate] = useState({

@@ -34,10 +34,12 @@ const seed = async ({
     await db.query(`
       CREATE TABLE events (
         event_id SERIAL PRIMARY KEY,
-        event_name VARCHAR(100) NOT NULL,
+        event_name VARCHAR(255) NOT NULL,
         description TEXT,
         location VARCHAR(255) NOT NULL,
-        date DATE NOT NULL,
+        start_time TIMESTAMP NOT NULL,
+        end_time TIMESTAMP NOT NULL,
+        time_zone VARCHAR(50) DEFAULT 'Europe/London',
         created_by INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
@@ -71,14 +73,26 @@ const seed = async ({
     await db.query(insertUsersQueryStr);
 
     const insertEventsQueryStr = format(
-      "INSERT INTO events (event_name, description, location, date, created_by) VALUES %L",
-      eventsData.map(({ event_name, description, location, date, created_by }) => [
-        event_name,
-        description,
-        location,
-        date,
-        created_by
-      ])
+      `INSERT INTO events (event_name, description, location, start_time, end_time, time_zone, created_by) VALUES %L`,
+      eventsData.map(
+        ({
+          event_name,
+          description,
+          location,
+          start_time,
+          end_time,
+          time_zone,
+          created_by
+        }) => [
+          event_name,
+          description,
+          location,
+          start_time,
+          end_time,
+          time_zone || "Europe/London",
+          created_by
+        ]
+      )
     );
     await db.query(insertEventsQueryStr);
 
