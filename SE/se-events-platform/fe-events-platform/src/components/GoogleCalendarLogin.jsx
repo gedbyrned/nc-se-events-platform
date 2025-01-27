@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import '../styles/style.css';
+import "../styles/style.css"; // Import the updated CSS with dark theme
 
 const GoogleCalendarLogin = () => {
   const [events, setEvents] = useState([]); // State to hold events
@@ -41,29 +41,35 @@ const GoogleCalendarLogin = () => {
   });
 
   return (
-    <div>
-      <button onClick={() => handleLogin()}>Login with Google</button>
+    <div className="google-calendar-login">
+      <button className="google-login" onClick={() => handleLogin()}>
+        Login with Google
+      </button>
+
       <button
+        className="secondary-btn"
         onClick={() => window.open("https://calendar.google.com", "_blank")}
         style={{ marginTop: "20px" }}
       >
-        Add More Events to Your Google Calendar
+        Add Events to Your Google Calendar
       </button>
-
+      <br />
+      <br />
       {events.length > 0 && (
-        <div>
+        <div className="events-list">
           <h4>Next 5 Upcoming Events on your Google Calendar:</h4>
           <ul>
             {events.map((event, index) => (
               <li key={index}>
-                <strong>{event.summary}</strong> <br />
-                {new Date(event.start.dateTime || event.start.date).toLocaleString()}
+                <strong>{event.summary}</strong>
+                <span>
+                  {new Date(event.start.dateTime || event.start.date).toLocaleString()}
+                </span>
               </li>
             ))}
           </ul>
         </div>
       )}
-
     </div>
   );
 };
