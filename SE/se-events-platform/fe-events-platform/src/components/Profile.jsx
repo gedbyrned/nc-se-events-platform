@@ -23,8 +23,10 @@ const Profile = ({ token }) => {
       <p><strong>Profile Type:</strong> {profile.user_type}</p>
 
       {profile.user_type !== "staff" && (
-        <>
+        <> 
+          <br />
           <h2>Events You're Attending:</h2>
+          <br />
           {profile.events.length > 0 ? (
             <ul>
               {profile.events.map((event) => (
@@ -42,10 +44,12 @@ const Profile = ({ token }) => {
         </>
       )}
 
-      <div className="calendar-container">
-        <h2>Access Your Google Calendar</h2>
-        <GoogleCalendarLogin />
-      </div>
+      <br />
+      {profile.user_type === "user" && (
+        <div className="calendar-container">
+          <GoogleCalendarLogin />
+        </div>
+      )}
     </div>
   );
 };

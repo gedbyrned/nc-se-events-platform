@@ -25,7 +25,7 @@ const SignIn = ({ setToken }) => {
   };
 
   return (
-    <div>
+    <div style={styles.container}>
       <h2>Sign In</h2>
       <form onSubmit={handleSubmit}>
         <label>
@@ -50,11 +50,21 @@ const SignIn = ({ setToken }) => {
           />
         </label>
         <br />
+        <br />
         <button type="submit">Sign In</button>
       </form>
       {message && <p>{message}</p>}
     </div>
   );
+};
+
+const styles = {
+  container: {
+    maxWidth: "400px",
+    margin: "0 auto",
+    padding: "20px",
+    textAlign: "center",
+  },
 };
 
 export default SignIn;

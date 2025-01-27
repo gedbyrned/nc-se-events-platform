@@ -32,24 +32,29 @@ const UserRegistration = ({ navigateToLogin }) => {
   return (
     <div style={styles.container}>
       <h2>User Registration</h2>
+      <br />
       <label>Username:</label>
       <input
         type="text"
         value={template.username}
         onChange={(e) => handleChange("username", e.target.value)}
       />
+      <br />
       <label>Password:</label>
       <input
         type="password"
         value={template.password}
         onChange={(e) => handleChange("password", e.target.value)}
       />
+      <br />
       <label>Email:</label>
       <input
         type="email"
         value={template.email}
         onChange={(e) => handleChange("email", e.target.value)}
       />
+      <br />
+      <br />
       <button onClick={handleUserRegistration}>Create Account</button>
     </div>
   );

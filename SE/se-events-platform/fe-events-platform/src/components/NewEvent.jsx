@@ -114,6 +114,7 @@ const NewEvent = ({ addNewEvent }) => {
         />
       </label>
       <br />
+      <br />
       <button type="submit">Add Event</button>
     </form>
   );
