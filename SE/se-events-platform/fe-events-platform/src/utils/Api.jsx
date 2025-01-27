@@ -7,7 +7,6 @@ const eventsPlatformApi = axios.create({
   },
 });
 
-// Fetch all events
 export const getEvents = () => {
   return eventsPlatformApi
     .get("events")
@@ -17,14 +16,11 @@ export const getEvents = () => {
     });
 };
 
-// Authenticate user
 export const authenticateUser = (credentials) => {
   return eventsPlatformApi
     .post("auth", credentials)
     .then((response) => {
-      // Check if the response contains the token
       if (response.data.token) {
-        // Store the token in localStorage after successful login
         localStorage.setItem("authToken", response.data.token);
       }
       return response;
@@ -35,17 +31,14 @@ export const authenticateUser = (credentials) => {
     });
 };
 
-// Register user
 export const registerUser = (userData) => {
   return eventsPlatformApi.post("register", userData);
 };
 
-// Check if username is available
 export const checkUsername = (username) => {
   return eventsPlatformApi.get(`check-username/${username}`);
 };
 
-// Get user profile
 export const getProfile = (token) => {
   return eventsPlatformApi
     .get("me", {
@@ -60,7 +53,6 @@ export const getProfile = (token) => {
     });
 };
 
-// Sign up for an event
 export const signUpForEvent = (eventId, token) => {
   return eventsPlatformApi
     .post(
@@ -79,7 +71,6 @@ export const signUpForEvent = (eventId, token) => {
     });
 };
 
-// Fetch Google Calendar events
 export const getGoogleCalendarEvents = (token) => {
   return eventsPlatformApi
     .get("google-calendar/events", {
@@ -101,7 +92,9 @@ export const addEvent = (eventData, token) => {
         Authorization: `Bearer ${token}`,
       },
     })
-    .then((response) => {console.log(response)})
+    .then((response) => {
+      console.log(response);
+    })
     .catch((error) => {
       console.error("Error creating event:", error);
       throw error;
@@ -134,7 +127,7 @@ export const deleteEvent = (eventId, token) => {
     })
     .then((response) => {
       console.log("Event deleted successfully:", response.data);
-      return response.data; 
+      return response.data;
     })
     .catch((error) => {
       console.error("Error deleting event:", error);

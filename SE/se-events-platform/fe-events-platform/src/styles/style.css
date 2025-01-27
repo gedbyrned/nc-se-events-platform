@@ -6,15 +6,15 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #333; /* Dark background */
-    color: #ccc; /* Lighter text colour */
+    background-color: #333;
+    color: #ccc; 
     line-height: 1.6;
     padding: 0;
     margin: 0;
 }
 
 .header {
-    background-color: #1a1a1a; /* Dark grey */
+    background-color: #1a1a1a; 
     color: white;
     text-align: center;
     padding: 20px;
@@ -24,7 +24,7 @@ body {
 }
 
 .nav {
-    background-color: #222; /* Darker grey */
+    background-color: #222; 
     padding: 10px;
 }
 
@@ -40,14 +40,14 @@ body {
 
 .nav a {
     text-decoration: none;
-    color: #ccc; /* Lighter grey for the text */
+    color: #ccc; 
     font-size: 1.1rem;
     text-transform: uppercase;
     padding: 5px 15px;
 }
 
 .nav a:hover {
-    background-color: #444; /* Darker grey for hover */
+    background-color: #444; 
     border-radius: 5px;
 }
 
@@ -56,8 +56,8 @@ body {
     padding: 20px;
     margin: 20px auto;
     max-width: 900px;
-    background-color: #444; /* Dark background for containers */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Darker shadow */
+    background-color: #444; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); 
     border-radius: 10px;
 }
 
@@ -65,7 +65,7 @@ body {
 .profile-container h1 {
     text-align: center;
     font-size: 2rem;
-    color: #ccc; /* Light text for headings */
+    color: #ccc; 
     margin-bottom: 20px;
 }
 
@@ -75,29 +75,29 @@ ul {
 }
 
 li {
-    background-color: #555; /* Dark grey for list items */
+    background-color: #555; 
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Darker shadow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
 }
 
 h3 {
     font-size: 1.4rem;
-    color: #ccc; /* Lighter colour for subheadings */
+    color: #ccc; 
 }
 
 p {
-    color: #bbb; /* Slightly lighter grey for paragraphs */
+    color: #bbb; 
 }
 
 .error {
-    color: #ff0000; /* Error in red */
+    color: #ff0000; 
     text-align: center;
     font-weight: bold;
     padding: 10px;
-    background-color: #3e0000; /* Darker red background */
-    border: 1px solid #5c0000; /* Dark red border */
+    background-color: #3e0000; 
+    border: 1px solid #5c0000; 
     border-radius: 5px;
 }
 
@@ -110,7 +110,7 @@ p {
 }
 
 button {
-    background-color: #444; /* Dark grey background */
+    background-color: #444; 
     color: white;
     border: none;
     padding: 10px 20px;
@@ -122,7 +122,7 @@ button {
 }
 
 button:hover {
-    background-color: #222; /* Darker grey for hover */
+    background-color: #222;
 }
 
 @media (max-width: 768px) {
@@ -143,21 +143,21 @@ button:hover {
     }
 }
 
-/* Google Calendar theme for the .calendar-container */
+
 .calendar-container {
     padding: 20px;
     margin: 20px auto;
     max-width: 900px;
-    background-color: white; /* Clean, white background for the Google calendar */
+    background-color: white;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .calendar-container h4 {
     text-align: center;
     font-size: 1.8rem;
     font-weight: bold;
-    color: #202124; /* Google dark text */
+    color: #202124; 
     margin-bottom: 15px;
 }
 
@@ -167,24 +167,24 @@ button:hover {
 }
 
 .calendar-container li {
-    background-color: #f1f3f4; /* Google light grey */
+    background-color: #f1f3f4;
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     display: flex;
     flex-direction: column;
 }
 
 .calendar-container li strong {
-    color: #4285f4; /* Google's Blue */
+    color: #4285f4;
     font-size: 1.2rem;
     margin-bottom: 5px;
 }
 
 .calendar-container li p {
     font-size: 1rem;
-    color: black; /* Google grey text */
+    color: black;
 }
 
 .calendar-container .button-container {
@@ -193,7 +193,7 @@ button:hover {
 }
 
 .calendar-container button {
-    background-color: #4285f4; /* Google's Blue */
+    background-color: #4285f4; 
     color: white;
     padding: 10px 20px;
     font-size: 1rem;
@@ -204,5 +204,20 @@ button:hover {
 }
 
 .calendar-container button:hover {
-    background-color: #357ae8; /* Lighter blue */
+    background-color: #357ae8; 
 }
+
+.spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

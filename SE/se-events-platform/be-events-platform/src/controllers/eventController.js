@@ -1,6 +1,10 @@
-const { google } = require("googleapis");
-const { getAllEvents, getEventById, addEvent, updateEvent, deleteEventById } = require("../models/eventModel.js");
-const { getUserById } = require("../models/userModel.js"); // Assuming you have this model function
+const {
+  getAllEvents,
+  getEventById,
+  addEvent,
+  updateEvent,
+  deleteEventById,
+} = require("../models/eventModel.js");
 
 const getEvents = async (req, res) => {
   try {
@@ -38,23 +42,27 @@ const postEvent = async (req, res, next) => {
     return res.status(400).send({ msg: "400: Bad Request" });
   }
 
-  const created_by = req.user.id; // Use authenticated user ID from JWT
+  const created_by = req.user.id;
 
   if (!created_by) {
     return res.status(400).send({ msg: "400: Missing user ID" });
   }
 
   try {
-    const event = await addEvent(event_name, description, location, start_time, end_time, created_by);
+    const event = await addEvent(
+      event_name,
+      description,
+      location,
+      start_time,
+      end_time,
+      created_by
+    );
     res.status(201).send({ event });
   } catch (error) {
     next(error);
   }
 };
 
-
-
-// Update and delete event methods remain unchanged
 const patchEvent = async (req, res, next) => {
   const { event_name, description, location, start_time, end_time } = req.body;
 
@@ -65,7 +73,14 @@ const patchEvent = async (req, res, next) => {
   const { event_id } = req.params;
 
   try {
-    const updatedEvent = await updateEvent(event_id, event_name, description, location, start_time, end_time);
+    const updatedEvent = await updateEvent(
+      event_id,
+      event_name,
+      description,
+      location,
+      start_time,
+      end_time
+    );
     res.status(200).send({ event: updatedEvent });
   } catch (error) {
     next(error);
@@ -87,7 +102,7 @@ const deleteEvent = async (req, res) => {
     }
 
     await deleteEventById(Number(event_id));
-    res.status(204).send(); // No content response
+    res.status(204).send();
   } catch (error) {
     console.error("Error deleting event:", error);
     res.status(500).send({ msg: "Failed to delete event" });
@@ -99,5 +114,5 @@ module.exports = {
   getEvent,
   postEvent,
   patchEvent,
-  deleteEvent
+  deleteEvent,
 };

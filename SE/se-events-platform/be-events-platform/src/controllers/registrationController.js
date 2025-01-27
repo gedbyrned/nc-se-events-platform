@@ -8,7 +8,6 @@ exports.registerUser = async (req, res, next) => {
     user_type,
   } = req.body;
 
-  // Validate required fields
   if (
     !username ||
     !password ||
@@ -19,13 +18,13 @@ exports.registerUser = async (req, res, next) => {
   }
 
   try {
-    // Check if username is already taken
+    
     const usernameTaken = await isUsernameTaken(username);
     if (usernameTaken) {
       return res.status(409).send({ error: "Username already taken" });
     }
 
-    // Add user to the database
+   
     const user = await addUser({
       username,
       password,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { addEvent } from "../utils/Api";
-import '../styles/style.css';
+import "../styles/style.css";
 
 const NewEvent = ({ addNewEvent }) => {
   const [newEvent, setNewEvent] = useState({
@@ -11,8 +11,9 @@ const NewEvent = ({ addNewEvent }) => {
     end_time: "",
   });
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState("");
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewEvent((prevEvent) => ({
@@ -21,12 +22,22 @@ const NewEvent = ({ addNewEvent }) => {
     }));
   };
 
-  // Handle form submission
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setError(""); // Reset error messages
+    setError("");
+    setSuccess("");
 
-    // Retrieve the token from localStorage
+    if (
+      !newEvent.event_name ||
+      !newEvent.description ||
+      !newEvent.location ||
+      !newEvent.start_time ||
+      !newEvent.end_time
+    ) {
+      setError("Please fill out all fields.");
+      return;
+    }
+
     const token = localStorage.getItem("authToken");
 
     if (!token) {
@@ -34,10 +45,10 @@ const NewEvent = ({ addNewEvent }) => {
       return;
     }
 
-    // Optimistically update the events list by adding the new event before the API call completes
+    setIsLoading(true);
+
     addNewEvent(newEvent);
 
-    // Make the API call to add the event
     addEvent(newEvent, token)
       .then((createdEvent) => {
         setNewEvent({
@@ -46,76 +57,115 @@ const NewEvent = ({ addNewEvent }) => {
           location: "",
           start_time: "",
           end_time: "",
-        }); // Reset form fields after successful event creation
+        });
+        setIsLoading(false);
+        setSuccess("Event created successfully!");
       })
       .catch((err) => {
-        console.error("Error creating event:", err);
+        setIsLoading(false);
         setError("Failed to create event. Please try again.");
+        console.error("Error creating event:", err);
       });
   };
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      {/* Display errors */}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <form onSubmit={handleFormSubmit} aria-labelledby="newEventForm">
+      {error && (
+        <p role="alert" style={{ color: "red" }}>
+          {error}
+        </p>
+      )}
 
-      <label>
-        Event Name:
-        <input
-          type="text"
-          name="event_name"
-          value={newEvent.event_name}
-          onChange={handleInputChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Description:
-        <input
-          type="text"
-          name="description"
-          value={newEvent.description}
-          onChange={handleInputChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Location:
-        <input
-          type="text"
-          name="location"
-          value={newEvent.location}
-          onChange={handleInputChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        Start Time:
-        <input
-          type="datetime-local"
-          name="start_time"
-          value={newEvent.start_time}
-          onChange={handleInputChange}
-          required
-        />
-      </label>
-      <br />
-      <label>
-        End Time:
-        <input
-          type="datetime-local"
-          name="end_time"
-          value={newEvent.end_time}
-          onChange={handleInputChange}
-          required
-        />
-      </label>
-      <br />
-      <br />
-      <button type="submit">Add Event</button>
+      {success && (
+        <p role="status" style={{ color: "green" }}>
+          {success}
+        </p>
+      )}
+
+      <fieldset>
+        <legend id="newEventForm">Create a New Event</legend>
+
+        <label htmlFor="event_name">
+          Event Name:
+          <input
+            type="text"
+            id="event_name"
+            name="event_name"
+            value={newEvent.event_name}
+            onChange={handleInputChange}
+            required
+            aria-required="true"
+          />
+        </label>
+        <br />
+
+        <label htmlFor="description">
+          Description:
+          <input
+            type="text"
+            id="description"
+            name="description"
+            value={newEvent.description}
+            onChange={handleInputChange}
+            required
+            aria-required="true"
+          />
+        </label>
+        <br />
+
+        <label htmlFor="location">
+          Location:
+          <input
+            type="text"
+            id="location"
+            name="location"
+            value={newEvent.location}
+            onChange={handleInputChange}
+            required
+            aria-required="true"
+          />
+        </label>
+        <br />
+
+        <label htmlFor="start_time">
+          Start Time:
+          <input
+            type="datetime-local"
+            id="start_time"
+            name="start_time"
+            value={newEvent.start_time}
+            onChange={handleInputChange}
+            required
+            aria-required="true"
+          />
+        </label>
+        <br />
+
+        <label htmlFor="end_time">
+          End Time:
+          <input
+            type="datetime-local"
+            id="end_time"
+            name="end_time"
+            value={newEvent.end_time}
+            onChange={handleInputChange}
+            required
+            aria-required="true"
+          />
+        </label>
+        <br />
+      </fieldset>
+
+      {isLoading ? (
+        <p>Creating event...</p>
+      ) : (
+        <button
+          type="submit"
+          aria-label="Submit the event form to create an event"
+        >
+          Add Event
+        </button>
+      )}
     </form>
   );
 };

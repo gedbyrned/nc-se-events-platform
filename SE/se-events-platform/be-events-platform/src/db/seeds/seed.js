@@ -1,12 +1,7 @@
 const format = require("pg-format");
 const db = require("../connection");
 
-const seed = async ({
-  usersData,
-  eventsData,
-  signupsData,
-  userTypesData
-}) => {
+const seed = async ({ usersData, eventsData, signupsData, userTypesData }) => {
   try {
     await db.query(`DROP TABLE IF EXISTS signups CASCADE`);
     await db.query(`DROP TABLE IF EXISTS events CASCADE`);
@@ -67,7 +62,7 @@ const seed = async ({
         password,
         email,
         user_type,
-        created_at || new Date().toISOString()
+        created_at || new Date().toISOString(),
       ])
     );
     await db.query(insertUsersQueryStr);
@@ -82,7 +77,7 @@ const seed = async ({
           start_time,
           end_time,
           time_zone,
-          created_by
+          created_by,
         }) => [
           event_name,
           description,
@@ -90,7 +85,7 @@ const seed = async ({
           start_time,
           end_time,
           time_zone || "Europe/London",
-          created_by
+          created_by,
         ]
       )
     );
@@ -101,14 +96,14 @@ const seed = async ({
       signupsData.map(({ event_id, user_id, created_at }) => [
         event_id,
         user_id,
-        created_at || new Date().toISOString()
+        created_at || new Date().toISOString(),
       ])
     );
     await db.query(insertSignupsQueryStr);
 
-    console.log('Seeding completed successfully.');
+    console.log("Seeding completed successfully.");
   } catch (err) {
-    console.error('Error seeding database', err);
+    console.error("Error seeding database", err);
   }
 };
 

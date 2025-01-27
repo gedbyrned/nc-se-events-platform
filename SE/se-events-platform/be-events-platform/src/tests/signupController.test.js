@@ -4,13 +4,11 @@ const jwt = require("jsonwebtoken");
 const { signupForEvent } = require("../controllers/signupController");
 const { getExistingSignup, addSignup } = require("../models/signupModel");
 
-// Mock the model functions
 jest.mock("../models/signupModel");
 
 const app = express();
 app.use(express.json());
 
-// Mock JWT middleware
 const mockAuthenticateJWT = (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
@@ -26,13 +24,11 @@ const mockAuthenticateJWT = (req, res, next) => {
 
 app.post("/api/signup", mockAuthenticateJWT, signupForEvent);
 
-// Mock JWT secret key
 const secretKey = "yourSecretKey";
 beforeAll(() => {
   process.env.JWT_SECRET = secretKey;
 });
 
-// Error handling middleware for tests
 app.use((err, req, res, next) => {
   res.status(500).send({ error: err.message });
 });
@@ -48,7 +44,9 @@ describe("signupController Tests", () => {
       getExistingSignup.mockResolvedValue(null);
       addSignup.mockResolvedValue(mockSignup);
 
-      const token = jwt.sign({ id: 2, user_type: "user" }, secretKey, { expiresIn: "24h" });
+      const token = jwt.sign({ id: 2, user_type: "user" }, secretKey, {
+        expiresIn: "24h",
+      });
       const response = await request(app)
         .post("/api/signup")
         .set("Authorization", token)
@@ -61,14 +59,19 @@ describe("signupController Tests", () => {
     });
 
     it("should return 403 if user type is not 'user'", async () => {
-      const token = jwt.sign({ id: 2, user_type: "admin" }, secretKey, { expiresIn: "24h" });
+      const token = jwt.sign({ id: 2, user_type: "admin" }, secretKey, {
+        expiresIn: "24h",
+      });
       const response = await request(app)
         .post("/api/signup")
         .set("Authorization", token)
         .send({ event_id: 1 });
 
       expect(response.status).toBe(403);
-      expect(response.body).toHaveProperty("error", "Only regular users can sign up for events.");
+      expect(response.body).toHaveProperty(
+        "error",
+        "Only regular users can sign up for events."
+      );
       expect(getExistingSignup).not.toHaveBeenCalled();
       expect(addSignup).not.toHaveBeenCalled();
     });
@@ -77,14 +80,19 @@ describe("signupController Tests", () => {
       const mockExistingSignup = { event_id: 1, user_id: 2 };
       getExistingSignup.mockResolvedValue(mockExistingSignup);
 
-      const token = jwt.sign({ id: 2, user_type: "user" }, secretKey, { expiresIn: "24h" });
+      const token = jwt.sign({ id: 2, user_type: "user" }, secretKey, {
+        expiresIn: "24h",
+      });
       const response = await request(app)
         .post("/api/signup")
         .set("Authorization", token)
         .send({ event_id: 1 });
 
       expect(response.status).toBe(409);
-      expect(response.body).toHaveProperty("error", "User is already signed up for this event.");
+      expect(response.body).toHaveProperty(
+        "error",
+        "User is already signed up for this event."
+      );
       expect(getExistingSignup).toHaveBeenCalledWith(1, 2);
       expect(addSignup).not.toHaveBeenCalled();
     });
@@ -111,7 +119,9 @@ describe("signupController Tests", () => {
     it("should handle server errors", async () => {
       getExistingSignup.mockRejectedValue(new Error("Database error"));
 
-      const token = jwt.sign({ id: 2, user_type: "user" }, secretKey, { expiresIn: "24h" });
+      const token = jwt.sign({ id: 2, user_type: "user" }, secretKey, {
+        expiresIn: "24h",
+      });
       const response = await request(app)
         .post("/api/signup")
         .set("Authorization", token)

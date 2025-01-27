@@ -74,7 +74,7 @@ describe("authController Tests", () => {
         .set("Authorization", "Bearer invalid-token");
       expect(response.status).toBe(401);
     });
-  
+
     it("should return 200 if a valid token is provided", async () => {
       const validToken = "valid-jwt-token";
       const response = await request(app)

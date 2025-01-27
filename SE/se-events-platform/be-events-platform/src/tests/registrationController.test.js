@@ -3,7 +3,6 @@ const express = require("express");
 const registrationController = require("../controllers/registrationController");
 const { addUser, isUsernameTaken } = require("../models/registrationModel");
 
-// Mock the model functions
 jest.mock("../models/registrationModel");
 
 const app = express();
@@ -12,7 +11,6 @@ app.use(express.json());
 app.post("/api/register", registrationController.registerUser);
 app.get("/api/check-username/:username", registrationController.checkUsername);
 
-// Error handling middleware for tests
 app.use((err, req, res, next) => {
   res.status(500).send({ error: err.message });
 });
