@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';  
-import NAV from './components/Nav';  
+import Nav from './components/Nav';  
 import EventsList from './components/Events';
-import SelectEvent from './components/SelectEvent'; 
+import SelectEvent from './components/NewEvent'; 
 import SignIn from './components/SignIn';
 import RegisterScreen from './components/RegisterScreen';  // For user/staff registration
 import Profile from './components/Profile';
@@ -14,7 +14,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <NAV /> 
+      <Nav /> 
       <Routes>
         {/* Public Routes */}
         <Route path="/home" element={<EventsList />} />

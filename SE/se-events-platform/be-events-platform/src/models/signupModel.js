@@ -1,6 +1,6 @@
 const db = require("../db/connection");
 
-// Check if the user is already signed up for an event
+
 exports.getExistingSignup = async (event_id, user_id) => {
   const result = await db.query(
     `SELECT * FROM signups WHERE event_id = $1 AND user_id = $2`,
@@ -9,7 +9,6 @@ exports.getExistingSignup = async (event_id, user_id) => {
   return result.rows[0];
 };
 
-// Add a new signup for an event
 exports.addSignup = async (event_id, user_id) => {
   const result = await db.query(
     `INSERT INTO signups (event_id, user_id) VALUES ($1, $2) RETURNING *`,

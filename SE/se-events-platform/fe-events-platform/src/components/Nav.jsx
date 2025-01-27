@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/style.css';
 
-const NAV = () => {
+const Nav = () => {
   return (
-    <nav>
+    <nav className="nav"> 
       <ul>
         <li><Link to="/home">Home</Link></li>
         <li><Link to="/sign-in">Sign In</Link></li>
@@ -14,4 +15,4 @@ const NAV = () => {
   );
 };
 
-export default NAV;
+export default Nav;

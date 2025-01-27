@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    padding: 0;
+    margin: 0;
+}
+
+.header {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.nav {
+    background-color: blue;
+    padding: 10px;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .nav li {
+    margin: 0 20px;
+  }
+  
+
+.nav a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    padding: 5px 15px;
+}
+
+.nav a:hover {
+    background-color: #007bff;
+    border-radius: 5px;
+}
+
+.events-container,
+.profile-container {
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 900px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.events-container h1,
+.profile-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    font-size: 1.4rem;
+    color: #333;
+}
+
+p {
+    color: #555;
+}
+
+.error {
+    color: #ff0000;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+}
+
+.profile-container p {
+    font-size: 1.1rem;
+}
+
+.profile-container strong {
+    font-weight: bold;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav li {
+        margin-bottom: 10px;
+    }
+
+    .events-container,
+    .profile-container {
+        max-width: 100%;
+        padding: 10px;
+        margin: 10px;
+    }
+}
