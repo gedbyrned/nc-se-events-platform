@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { deleteEvent } from '../utils/Api';
-import '../styles/style.css';
+import React, { useState } from "react";
+import { deleteEvent } from "../utils/Api";
+import "../styles/style.css";
 
 const DeleteEvent = ({ eventId, onDelete }) => {
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = () => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
 
     if (!token) {
-      setError('You must be logged in to delete events.');
+      setError("You must be logged in to delete events.");
       return;
     }
 
@@ -18,12 +18,12 @@ const DeleteEvent = ({ eventId, onDelete }) => {
     deleteEvent(eventId, token)
       .then(() => {
         setIsDeleting(false);
-        onDelete(eventId); 
+        onDelete(eventId);
       })
       .catch((error) => {
         setIsDeleting(false);
-        setError('Failed to delete event. Please try again later.');
-        console.error('Error deleting event:', error);
+        setError("Failed to delete event. Please try again later.");
+        console.error("Error deleting event:", error);
       });
   };
 
@@ -32,11 +32,14 @@ const DeleteEvent = ({ eventId, onDelete }) => {
       {isDeleting ? (
         <p>Deleting event...</p>
       ) : (
-        <button onClick={handleDelete} style={{ backgroundColor: 'red', color: 'white' }}>
+        <button
+          onClick={handleDelete}
+          style={{ backgroundColor: "red", color: "white" }}
+        >
           Delete Event
         </button>
       )}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 };

@@ -1,8 +1,8 @@
 exports.mockAuthenticateJWT = (req, res, next) => {
     req.user = {
-      id: 1, // Default mock user ID
+      id: 1, 
       username: "mockUser",
-      user_type: "staff", // Default to staff; adjust in tests as needed
+      user_type: "staff", 
     };
     next();
   };

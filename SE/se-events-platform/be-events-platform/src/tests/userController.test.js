@@ -37,11 +37,9 @@ describe("userController Tests", () => {
 
   describe("GET /api/me", () => {
     it("should return user profile for valid token", async () => {
-      const validToken = jwt.sign(
-        { id: 1, username: "testUser" },
-        secretKey,
-        { expiresIn: "24h" }
-      );
+      const validToken = jwt.sign({ id: 1, username: "testUser" }, secretKey, {
+        expiresIn: "24h",
+      });
 
       const response = await request(app)
         .get("/api/me")

@@ -1,22 +1,35 @@
 import React, { useState } from "react";
 import UserRegistration from "./UserRegistration";
 import StaffRegistration from "./StaffRegistration";
-import '../styles/style.css';
+import "../styles/style.css";
 
 const RegisterScreen = ({ navigateToLogin }) => {
-  const [isStaff, setIsStaff] = useState(false); // Toggle between staff and user registration
+  const [isStaff, setIsStaff] = useState(false);
 
   return (
     <div style={styles.container}>
-      {!isStaff ? (
-        <UserRegistration navigateToLogin={navigateToLogin} />
-      ) : (
-        <StaffRegistration navigateToLogin={navigateToLogin} />
-      )}
+      <h1 id="registerScreenHeader">
+        Register for the Community Events Platform
+      </h1>
 
-      <button onClick={() => setIsStaff(!isStaff)}>
-        {isStaff ? "Register as User" : "Register as Staff"}
-      </button>
+      <div aria-live="polite">
+        {!isStaff ? (
+          <UserRegistration navigateToLogin={navigateToLogin} />
+        ) : (
+          <StaffRegistration navigateToLogin={navigateToLogin} />
+        )}
+
+        <button
+          onClick={() => setIsStaff(!isStaff)}
+          aria-label={
+            isStaff
+              ? "Switch to user registration"
+              : "Switch to staff registration"
+          }
+        >
+          {isStaff ? "Register as User" : "Register as Staff"}
+        </button>
+      </div>
     </div>
   );
 };
