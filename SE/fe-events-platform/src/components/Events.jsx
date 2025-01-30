@@ -68,40 +68,12 @@ const EventsList = () => {
       });
   };
 
-  const addNewEvent = (newEvent) => {
-    setEvents((prevEvents) => [...prevEvents, newEvent]);
-  };
-
-  const handleUpdateEvent = (updatedEvent) => {
-    setEvents((prevEvents) =>
-      prevEvents.map((event) =>
-        event.event_id === updatedEvent.event_id ? updatedEvent : event
-      )
-    );
-    setEditingEvent(null);
-    setSuccessMessage("Event updated successfully!");
-  };
-
-  const handleDeleteEvent = (eventId) => {
-    setEvents((prevEvents) =>
-      prevEvents.filter((event) => event.event_id !== eventId)
-    );
-  };
-
-  const openUpdateEvent = (event) => {
-    setEditingEvent(event);
-  };
-
-  const closeUpdateEvent = () => {
-    setEditingEvent(null);
-  };
-
   return (
     <div style={styles.container}>
       {isStaff && !editingEvent && (
         <div>
           <h2 id="addEventHeader">Add a New Event</h2>
-          <NewEvent addNewEvent={addNewEvent} />
+          <NewEvent addNewEvent={(newEvent) => setEvents([...events, newEvent])} />
         </div>
       )}
 
@@ -130,8 +102,14 @@ const EventsList = () => {
       {editingEvent ? (
         <UpdateEvent
           event={editingEvent}
-          closeUpdateEvent={closeUpdateEvent}
-          updateEvent={handleUpdateEvent}
+          closeUpdateEvent={() => setEditingEvent(null)}
+          updateEvent={(updatedEvent) => {
+            setEvents(events.map((event) =>
+              event.event_id === updatedEvent.event_id ? updatedEvent : event
+            ));
+            setEditingEvent(null);
+            setSuccessMessage("Event updated successfully!");
+          }}
         />
       ) : events.length > 0 ? (
         <ul aria-labelledby="eventsListHeader">
@@ -143,8 +121,10 @@ const EventsList = () => {
                 <strong>Location:</strong> {event.location}
               </p>
               <p>
-                <strong>Date:</strong>{" "}
-                {new Date(event.start_time).toLocaleDateString()}
+                <strong>Date:</strong> {new Date(event.start_time).toLocaleDateString()} {" "}
+              </p>
+              <p>
+                <strong>Time:</strong> {new Date(event.start_time).toLocaleTimeString()} - {new Date(event.end_time).toLocaleTimeString()}
               </p>
 
               {isUser && (
@@ -160,7 +140,7 @@ const EventsList = () => {
               {isStaff && (
                 <>
                   <button
-                    onClick={() => openUpdateEvent(event)}
+                    onClick={() => setEditingEvent(event)}
                     aria-label={`Edit ${event.event_name}`}
                     disabled={isLoading}
                   >
@@ -168,7 +148,7 @@ const EventsList = () => {
                   </button>
                   <DeleteEvent
                     eventId={event.event_id}
-                    onDelete={handleDeleteEvent}
+                    onDelete={(eventId) => setEvents(events.filter((event) => event.event_id !== eventId))}
                     aria-label={`Delete ${event.event_name}`}
                   />
                 </>

@@ -74,6 +74,9 @@ const Profile = ({ token }) => {
                     <strong>Date:</strong>{" "}
                     {new Date(event.start_time).toLocaleDateString()}
                   </p>
+                  <p>
+                    <strong>Time:</strong> {new Date(event.start_time).toLocaleTimeString()} - {new Date(event.end_time).toLocaleTimeString()}
+                  </p>
                 </li>
               ))}
             </ul>
