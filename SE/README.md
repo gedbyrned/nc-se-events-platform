@@ -88,7 +88,10 @@ This will start the app and open it in your browser at `http://localhost:3000`.
 
 ## **Account Creation**
 
-At this stage, any user can create an account, you can also create a staff account that has certain privileges, like managing events.
+At this stage, any user can create an account, you can also create a staff account that has certain privileges, like managing events. If you want to test a staff account, you can use the login details:
+
+username: staff2
+password: password
 
 ## **Where to Find It**
 
@@ -100,3 +103,5 @@ https://se-events-platform.netlify.app/home
 
 Also find an demonstration video of the application at the following link:
 
+
+https://youtu.be/v6eILnc20sI
