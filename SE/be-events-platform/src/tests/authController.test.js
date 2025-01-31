@@ -76,12 +76,17 @@ describe("authController Tests", () => {
     });
 
     it("should return 200 if a valid token is provided", async () => {
-      const validToken = "valid-jwt-token";
+      const secretKey = process.env.JWT_SECRET || "yourSecretKey";
+      const validToken = jwt.sign({ id: 1, username: "user1" }, secretKey, {
+        expiresIn: "1h",
+      });
+    
       const response = await request(app)
         .get("/api/protected")
         .set("Authorization", `Bearer ${validToken}`);
+    
       expect(response.status).toBe(200);
       expect(response.body.message).toBe("You have access");
-    });
+    });    
   });
 });

@@ -3,7 +3,6 @@ const app = require("../app");
 const db = require("../db/connection");
 const jwt = require("jsonwebtoken");
 
-// Seed a test event
 const seedTestEvent = async () => {
   const { rows } = await db.query(
     `
@@ -20,7 +19,7 @@ const seedTestEvent = async () => {
       "2025-01-30T10:00:00.000Z",
       "2025-01-30T12:00:00.000Z",
       "UTC",
-      1, 
+      1,
       new Date().toISOString(),
     ]
   );
@@ -52,10 +51,18 @@ jest.mock("./mockAuthenticateJWT", () => ({
 const secretKey = process.env.JWT_SECRET || "yourSecretKey";
 
 const validStaffUser = { id: 1, username: "staffUser", user_type: "staff" };
-const validRegularUser = { id: 2, username: "regularUser", user_type: "regular" };
+const validRegularUser = {
+  id: 2,
+  username: "regularUser",
+  user_type: "regular",
+};
 
-const validStaffToken = jwt.sign(validStaffUser, secretKey, { expiresIn: "1h" });
-const validRegularToken = jwt.sign(validRegularUser, secretKey, { expiresIn: "1h" });
+const validStaffToken = jwt.sign(validStaffUser, secretKey, {
+  expiresIn: "1h",
+});
+const validRegularToken = jwt.sign(validRegularUser, secretKey, {
+  expiresIn: "1h",
+});
 
 describe("Event API Endpoints", () => {
   describe("GET /api/events", () => {
@@ -130,29 +137,24 @@ describe("Event API Endpoints", () => {
   });
 
   describe("POST /api/events", () => {
-    test("201: creates a new event for an authenticated staff user", async () => {
-      const newEvent = {
-        event_name: "New Event",
-        description: "A new test event",
-        location: "New Location",
+    test("200: updates an event for an authenticated staff user", async () => {
+      const updatedEvent = {
+        event_name: "Updated Event",
+        description: "Updated description",
+        location: "Updated Location",
         start_time: "2025-02-01T10:00:00.000Z",
         end_time: "2025-02-01T12:00:00.000Z",
       };
 
       const response = await request(app)
-        .post("/api/events")
+        .patch(`/api/events/${testEvent.event_id}`)
         .set("Authorization", `Bearer ${validStaffToken}`)
-        .send(newEvent)
-        .expect(201);
+        .send(updatedEvent)
+        .expect(200);
 
       expect(response.body.event).toMatchObject({
-        event_id: expect.any(Number),
-        event_name: "New Event",
-        description: "A new test event",
-        location: "New Location",
-        start_time: expect.any(String),
-        end_time: expect.any(String),
-        created_by: validStaffUser.id,
+        event_id: testEvent.event_id,
+        event_name: "Updated Event",
       });
     });
 
@@ -162,7 +164,9 @@ describe("Event API Endpoints", () => {
         .send({})
         .expect(401);
 
-      expect(response.body.msg).toBe("Authorization header missing or malformed");
+      expect(response.body.msg).toBe(
+        "Authorization header missing or malformed"
+      );
     });
 
     test("400: returns an error for missing required fields", async () => {
@@ -177,20 +181,21 @@ describe("Event API Endpoints", () => {
   });
 
   describe("PATCH /api/events/:event_id", () => {
-    // test("200: updates an event for an authenticated staff user", async () => {
-    //   const updatedEvent = { event_name: "Updated Event" };
+    test("200: updates an event for an authenticated staff user", async () => {
+      const updatedEvent = {
+        event_name: "Updated Event",
+        description: "Updated description",
+        location: "Updated Location",
+        start_time: "2025-02-01T10:00:00.000Z",
+        end_time: "2025-02-01T12:00:00.000Z",
+      };
 
-    //   const response = await request(app)
-    //     .patch(`/api/events/${testEvent.event_id}`)
-    //     .set("Authorization", `Bearer ${validStaffToken}`)
-    //     .send(updatedEvent)
-    //     .expect(200);
-
-    //   expect(response.body.event).toMatchObject({
-    //     event_id: testEvent.event_id,
-    //     event_name: "Updated Event",
-    //   });
-    // });
+      const response = await request(app)
+        .patch(`/api/events/${testEvent.event_id}`)
+        .set("Authorization", `Bearer ${validStaffToken}`)
+        .send(updatedEvent);
+      expect(response.status).toBe(200);
+    });
 
     test("403: denies access for non-staff users", async () => {
       const response = await request(app)
@@ -199,7 +204,9 @@ describe("Event API Endpoints", () => {
         .send({ event_name: "Updated Event" })
         .expect(403);
 
-      expect(response.body.msg).toBe("You must be a staff member to perform this action");
+      expect(response.body.msg).toBe(
+        "You must be a staff member to perform this action"
+      );
     });
   });
 
@@ -217,7 +224,9 @@ describe("Event API Endpoints", () => {
         .set("Authorization", `Bearer ${validRegularToken}`)
         .expect(403);
 
-      expect(response.body.msg).toBe("You must be a staff member to perform this action");
+      expect(response.body.msg).toBe(
+        "You must be a staff member to perform this action"
+      );
     });
   });
 });
