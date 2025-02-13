@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const eventsPlatformApi = axios.create({
-  baseURL: "http://localhost:5431/api/",
+  baseURL: "https://nc-se-events-platform.onrender.com/api/",
   headers: {
     "Content-Type": "application/json",
   },
