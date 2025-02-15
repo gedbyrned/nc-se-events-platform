@@ -97,7 +97,7 @@ password: password
 
 You can check out the live version of the platform at:
 
-https://se-events-platform.netlify.app/home
+http://shiny-pot.surge.sh
 
 ## **App Demo Video**
 
