@@ -103,7 +103,7 @@ password: password
 
 You can check out the live version of the platform at:
 
-http://shiny-pot.surge.sh
+https://shiny-pot.surge.sh
 
 ## **App Demo Video**
 
