@@ -13,7 +13,7 @@ I have built this platform to help you and your community stay connected by maki
 ## **What Can You Do Here?**
 
 - **Browse Events**: Easily browse through upcoming events in your community.
-- **Sign Up**: Find an event you like? Sign up in a few clicks!cd
+- **Sign Up**: Find an event you like? Sign up in a few clicks!
 - **Add to Google Calendar**: After signing up, add the event directly to your Google Calendar to keep track of it.
 - **For Staff Members**: If you're part of the staff, you’ll have special access to create, update, and manage events.
 - **Responsive Design**: The platform is designed to work beautifully across devices – whether you're on a phone, tablet, or desktop.
