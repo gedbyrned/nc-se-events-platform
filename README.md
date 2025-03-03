@@ -1,9 +1,9 @@
 # **Community Events Platform**
 
-🚀 **Live Demo:** [Community Events Platform](http://shiny-pot.surge.sh)  
+🚀 **Live Demo:** [Community Events Platform](https://shiny-pot.surge.sh)  
 🎥 **App Demo Video:** [Watch on YouTube](https://youtu.be/v6eILnc20sI)  
 🔑 **Test Staff Account:**  
-   - Username: **staff2**  
+   - Username: **staff**  
    - Password: **password**  
 
 ## **Welcome to the Community Events Platform!**
@@ -103,7 +103,7 @@ password: password
 
 You can check out the live version of the platform at:
 
-http://shiny-pot.surge.sh
+https://shiny-pot.surge.sh
 
 ## **App Demo Video**
 
